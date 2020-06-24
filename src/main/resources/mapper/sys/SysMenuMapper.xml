@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.pj.sys.Dao.SysMenuDao">
+<!-- 查询所有菜单以及菜单对应的上级菜单名称 -->
+<select id="findObjects" resultType="com.cy.pj.sys.entity.SysMenu">
+
+<!-- 方案一：嵌套循环 -->
+
+<!--select c.*,(select name from sys_menus 
+ where c.parentId=p.id) parentName 
+from sys_menus c -->
+
+<!-- 方案二：表关联查询 c.id,c.name,c.parentId-->
+
+select c.*,p.name parentName 
+from sys_menus c left join sys_menus p
+on c.parentId=p.id
+
+</select>
+
+<select id="findZtreeMenuNodes"
+            resultType="com.cy.pj.common.vo.Node">
+        select id,name,parentId
+        from sys_menus        
+    </select>
+
+<insert id="insertObject"
+            parameterType="com.cy.pj.sys.entity.SysMenu">
+          insert into sys_menus
+          (name,url,type,sort,note,parentId,permission,
+createdTime,modifiedTime,createdUser,modifiedUser)
+          values
+          (#{name},#{url},#{type},#{sort},#{note},#{parentId},
+#{permission},now(),now(),#{createdUser},#{modifiedUser})
+ </insert>
+<update id="updateObject"  parameterType="com.cy.pj.sys.entity.SysMenu">
+	update sys_menus set
+	name=#{name},
+	url=#{url},
+	type=#{type},
+	sort=#{sort},
+	parentId=#{parentId},
+	permission=#{permission},
+	modifiedUser=#{modifiedUser},
+	modifiedTime=now()
+	where id=#{id}
+</update>
+
+
+ <!-- 基于多个菜单id找到对应的授权标识 -->
+    <select id="findPermissions" resultType="string">
+    
+        select permission
+        from sys_menus
+        <where>
+           <foreach collection="array" separator=" or " item="menuId">
+              id=#{menuId}
+           </foreach>
+        </where>
+    </select>
+</mapper>

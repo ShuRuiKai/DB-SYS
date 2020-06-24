@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.pj.sys.Dao.SysRoleMenuDao">
+
+<delete id="deleteObjectsByMenuId"
+             parameterType="int">
+          delete from sys_role_menus
+          where menu_id=#{menuId}
+     </delete>
+
+<select id="getChildCount"
+             parameterType="int"
+             resultType="int">
+          select count(*)
+          from sys_menus
+          where parentId=#{id}        
+ </select>
+
+<delete id="deleteObject">
+       delete from sys_menus
+       where id =#{id}
+       
+    </delete>
+
+ <delete id="deleteObjectsByRoleId"
+             parameterType="int">
+          delete from sys_role_menus
+          where role_id=#{roleId}
+        </delete>
+
+<insert id="insertObjects">
+         insert into sys_role_menus
+         (role_id,menu_id)
+         values 
+         <foreach collection="menuIds" 
+                  separator=","
+                  item="item">
+              (#{roleId},#{item})
+         </foreach>
+ </insert>
+ 
+ <select id="findMenuIdsByRoleId"
+              resultType="int">
+            select menu_id from sys_role_menus  where role_id=#{id} 
+  </select>
+ 
+ 
+  <!-- 基于多个角色id获取对应的菜单id -->
+   <select id="findMenuIdsByRoleIds" resultType="int">
+        select menu_id
+        from sys_role_menus
+        <where>
+          <foreach collection="array" separator=" or " item="roleId">
+              role_id=#{roleId}
+          </foreach>
+        </where>
+   </select>
+
+</mapper>

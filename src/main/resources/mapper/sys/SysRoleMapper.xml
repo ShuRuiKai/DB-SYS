@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.pj.sys.Dao.SysRoleDao">
+
+
+<sql id="queryWhereId">
+              from sys_roles
+              <where>
+               <if test="name!=null and name!=''">
+                 name like concat("%",#{name},"%")
+               </if>
+              </where>
+       </sql>
+       <select id="findPageObjects" 
+               resultType="com.cy.pj.sys.entity.SysRole">
+              select *
+              <include refid="queryWhereId"/>
+              order by createdTime desc
+       </select>
+       <!--
+    <select id="findPageObjects"
+            resultType="com.cy.pj.sys.entity.SysRole">
+         select *
+         <include refid="queryWhereId"/>
+order by createdTime desc
+         limit #{startIndex},#{pageSize}    
+</select>
+
+  <select id="getRowCount"  resultType="int">
+          select count(*)  
+          <include refid="queryWhereId"/>
+    </select> -->
+ 
+ 
+ 
+  <delete id="deleteObject">
+       delete from sys_roles
+       where id =#{id}
+    </delete>
+    
+<insert id="insertObject"
+	parameterType="com.cy.pj.sys.entity.SysRole" useGeneratedKeys="true"
+	keyProperty="id">
+	insert into sys_roles
+	(id,name,note,createdTime,modifiedTime,
+	createdUser,modifiedUser)
+	values
+	(null,#{name},#{note},now(),now(),
+	#{createdUser},#{modifiedUser})
+    </insert>
+
+ <select id="findObjectById"
+           resultMap="sysRoleMenu">
+           select id,name,note
+           from sys_roles
+           where id=#{id}        
+   </select>
+<!-- resultMap一般用于自定义映射或一些关联查询中 -->
+	<resultMap type="com.cy.pj.sys.entity.SysRoleMenu"
+		id="sysRoleMenu">
+		<!-- id元素用于唯一主键映射, 假如又将这个值作为新的查询条件,
+		用去执行了新的查询,这条语句建议不要省略  -->
+		<id property="id" column="id" />
+		<!-- collection一般应用于one2many查询 -->
+		<!-- 1...property为resultMap中type类型中的一个属性值 -->
+		<!-- 2...ofType为property对应的属性集合中的一个对象类型-->
+		<!-- 3...id为上次查询的结果中某一个值 -->
+		<!-- 4...select的值为一个命名空间下的查询语句 -->
+		<collection property="menuIds"
+			select="com.cy.pj.sys.Dao.SysRoleMenuDao.findMenuIdsByRoleId"
+			column="id">
+		</collection>
+	</resultMap>
+
+
+
+
+<update id="updateObject"
+            parameterType="com.cy.pj.sys.entity.SysRole">  
+       update sys_roles  set
+           name=#{name},
+           note=#{note},
+           modifiedUser=#{modifiedUser},
+           modifiedTime=now()
+        where id=#{id}
+    </update>
+
+<select id="findObjects"
+            resultType="com.cy.pj.common.vo.CheckBox">
+           select id,name
+           from sys_roles
+  </select>
+</mapper>
