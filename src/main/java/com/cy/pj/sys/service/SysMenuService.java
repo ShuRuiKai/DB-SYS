@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cy.pj.common.vo.Node;
 import com.cy.pj.sys.entity.SysMenu;
+import com.cy.pj.sys.entity.SysUserMenu;
 
 
 /**
@@ -24,4 +25,6 @@ public interface SysMenuService {
 	int saveObject(SysMenu entity);
 	
 	int updateObject(SysMenu entity);
+	
+	List<SysUserMenu> findUserMenusByUserId(Integer id);
 }

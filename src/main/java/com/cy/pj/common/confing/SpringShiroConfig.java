@@ -85,6 +85,7 @@ public class SpringShiroConfig {//http1.1
 		//除了匿名访问的资源,其它都要认证("authc")后访问
 		//map.put("/**","authc");
 		map.put("/**","user");//当选择了记住我功能，认证方式进行修改
+		
 		fBean.setFilterChainDefinitionMap(map);
 		return fBean;
 	}
@@ -101,6 +102,8 @@ public class SpringShiroConfig {//http1.1
 		return advisor;
 	}
 
+	
+	
 }
 
 

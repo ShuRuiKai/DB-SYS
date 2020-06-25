@@ -199,22 +199,21 @@ public class SysUserServiceImpl implements SysUserService {
 				throw new IllegalArgumentException("原密码不能为空");
 				//获取登陆用户
 			//	SysUser user=(SysUser)SecurityUtils.getSubject().getPrincipal();
-				SysUser user=ShiroUtils.getUser();
+				SysUser user=ShiroUtils.getUser();//调用ShiroUtils里的getUser方法
 				//方法1
-				/*String sourceHashedPassword=user.getPassword();
-				 *SimpleHash sh=new SimpleHash("MD5", sourcePassword, user.getSalt(), 1);
-				 *String hashedInputPassword=sh.toHex();
-				 *if(!sourceHashedPassword.equals(hashedInputPassword))
-				 *throw new IllegalArgumentException("原密码输入的不正确");
-				 */
+				 SimpleHash sh=new SimpleHash("MD5", password, user.getSalt(), 1);
+				 String sourceHashedPassword=user.getPassword();	//获取原密码
+				 String hashedInputPassword=sh.toHex();				//输入的密码
+				 if(!sourceHashedPassword.equals(hashedInputPassword)) //校验（获取原密码）（输入的密码）是否相等
+				 throw new IllegalArgumentException("原密码输入的不正确");
 				//方法2
-				SimpleHash sh=new SimpleHash("MD5",password, user.getSalt(), 1);
-				if(!user.getPassword().equals(sh.toHex()))
-				throw new IllegalArgumentException("原密码不正确");
+//				SimpleHash sh=new SimpleHash("MD5",password, user.getSalt(), 1);
+//				if(!user.getPassword().equals(sh.toHex()))
+//				throw new IllegalArgumentException("原密码不正确");
 				//3.对新密码进行加密
 				String salt=UUID.randomUUID().toString();
 				sh=new SimpleHash("MD5",newPassword,salt, 1);
-				//4.将新密码加密以后的结果更新到数据库
+				//4.将新密码加密以后的结果更新到数据库(输入的密码,盐值，用户id)
 				int rows=sysUserDao.updatePassword(sh.toHex(), salt,user.getId());
 				if(rows==0)
 				throw new ServiceException("修改失败");

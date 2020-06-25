@@ -34,10 +34,6 @@ public interface SysUserDao {
 	@Select("select * from sys_users where username=#{username}")
 	SysUser findUserByUserName(String username);
 	
-	int updatePassword(
-			@Param("password")String password,
-			@Param("salt")String salt,
-			@Param("id")Integer id);
 	/**
 	 * 修改密码操作
 	 * @param username
@@ -45,6 +41,10 @@ public interface SysUserDao {
 	 * @param salt
 	 * @return
 	 */
+	int updatePassword(
+			@Param("password")String password,
+			@Param("salt")String salt,
+			@Param("id")Integer id);
 	@Update("update sys_users set password=#{password},salt=#{salt},modifiedTime=now() where username=#{username}")
 	int updatePasswords(String username,String password,String salt);
 	

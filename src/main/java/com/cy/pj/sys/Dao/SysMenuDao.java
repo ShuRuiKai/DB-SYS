@@ -1,10 +1,13 @@
 package com.cy.pj.sys.Dao;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.cy.pj.common.vo.Node;
 import com.cy.pj.sys.entity.SysMenu;
+import com.cy.pj.sys.entity.SysUserMenu;
 
 
 @Mapper
@@ -37,6 +40,14 @@ public interface SysMenuDao {//sysMenuMapper
 		 * @param menuIds
 		 * @return
 		 */
-		List<String> findPermissions(Integer[] menuIds);
-		
+	List<String> findPermissions(Integer[] menuIds);
+	
+	/**
+	 * 基于菜单获取菜单信息
+	 * @param menuIds
+	 * @return
+	 */
+	List<SysUserMenu> findMenusByIds(
+	@Param("menuIds")List<Integer> menuIds);
+
 }

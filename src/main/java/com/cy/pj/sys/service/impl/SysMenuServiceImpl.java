@@ -12,7 +12,9 @@ import com.cy.pj.common.exception.ServiceException;
 import com.cy.pj.common.vo.Node;
 import com.cy.pj.sys.Dao.SysMenuDao;
 import com.cy.pj.sys.Dao.SysRoleMenuDao;
+import com.cy.pj.sys.Dao.SysUserRoleDao;
 import com.cy.pj.sys.entity.SysMenu;
+import com.cy.pj.sys.entity.SysUserMenu;
 import com.cy.pj.sys.service.SysMenuService;
 
 @Service
@@ -22,6 +24,8 @@ public class SysMenuServiceImpl implements SysMenuService {
 	private SysMenuDao sysMenuDao; 
 	@Autowired
 	private SysRoleMenuDao sysRoleMenuDao;
+	@Autowired
+	private SysUserRoleDao sysUserRoleDao;
 	
 	//Spring中的cache：Map<String,Cache>
 		//将查询结果进行cache
@@ -96,6 +100,18 @@ public class SysMenuServiceImpl implements SysMenuService {
 				return rows;
 		}
 
+	@Override
+	public List<SysUserMenu> findUserMenusByUserId(Integer id) {
+		//1.对用户id进行判断
+		//2.基于用户id查找用户对应的角色id
+		List<Integer> roleIds=
+				sysUserRoleDao.findRoleIdsByUserId(id);
+		//3.基于角色id获取角色对应的菜单信息,并进行封装.
+		List<Integer> menuIds=
+				sysRoleMenuDao.findMenuIdsByRoleIds(roleIds.toArray(new Integer[] {}));
+		//4.基于菜单id获取用户对应的菜单信息并返回
+		return sysMenuDao.findMenusByIds(menuIds);
+	}
 	}
 
 
