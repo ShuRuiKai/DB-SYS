@@ -14,3 +14,4 @@ public class ShiroUtils {
 		return (SysUser)SecurityUtils.getSubject().getPrincipal();
 	}
 }
+//SecurityManger-->SessionManager--->Session

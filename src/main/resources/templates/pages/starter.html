@@ -249,6 +249,7 @@ desired effect
       <!-- Sidebar Menu -->
          <ul class="sidebar-menu" data-widget="tree">
         <li class="header">HEADER</li>
+        
         <li class="treeview"  th:each="m:${userMenus}">
           <a href="#"><i class="fa fa-link"></i> 
           <span>[[${m.name}]]</span>
@@ -258,7 +259,7 @@ desired effect
           </a>
           <ul class="treeview-menu">
             <li th:each="c:${m.childs}">
-                <a th:onclick="javascript:doLoadRS([[${c.url}]])">[[${c.name}]]</a>
+                <a th:onclick="javascript:doLoadUrl([[${c.url}]])">[[${c.name}]]</a>
             </li>
           </ul>
         </li>
@@ -402,25 +403,12 @@ desired effect
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
 <script type="text/javascript">
-  /*  $(function(){
-	   doLoadUI("load-dept-id","dept/dept_list")
-	  	doLoadUI("load-menu-id","menu/menu_list")
-	  	doLoadUI("load-role-id","role/role_list")
-	  	doLoadUI("load-user-id","user/user_list")
-	  	doLoadUI("load-log-id","log/log_list")
-	  	doLoadUI("load-pwd-id","pwd/pwd_edit")
-    })
-      function doLoadUI(id,url){
-    	$("#"+id).click(function(){
-    		$("#mainContentId").load(url)
-    	});
-    }  */
+  
 
-    $(function(){
-	    function doLoadRS(url){
+	    function doLoadUrl(url){
 			 $("#mainContentId").load(url);
 		}
-    })
+   
 </script>
 </body>
 </html>

@@ -16,7 +16,7 @@ import com.cy.pj.common.exception.ServiceException;
 public class TimeAccessInterceptor 
         implements HandlerInterceptor {
 	/**
-	 * preHandle在控制层目标方法执行之前执行
+	 * preHandle在控制层目标方法（@Controller）执行之前执行
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -24,15 +24,15 @@ public class TimeAccessInterceptor
 		System.out.println("TimeAccessInterceptor.preHandler()拦截器===");
 		//获取java中的日历对象
 		Calendar c=Calendar.getInstance();
-		c.set(Calendar.HOUR_OF_DAY, 6);
-		c.set(Calendar.MINUTE, 0);
-		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.HOUR_OF_DAY, 6);//6点之后
+		c.set(Calendar.MINUTE, 0);//0分钟
+		c.set(Calendar.SECOND, 0);//0秒
 		long start=c.getTimeInMillis();
-		c.set(Calendar.HOUR_OF_DAY,23);
+		c.set(Calendar.HOUR_OF_DAY,23);//23点之前
 		long end=c.getTimeInMillis();
 		long cTime=System.currentTimeMillis();
 		if(cTime<start||cTime>end)
-		throw new ServiceException("不在访问时间之内");
-		return true;
+		throw new ServiceException("不在访问时间之内，请在6~23点之内进入！");
+		return true;//false 表示拒绝执行
 	}
 }

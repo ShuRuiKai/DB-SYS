@@ -12,5 +12,6 @@ public class SysUserMenu implements Serializable{
 	private Integer id;
 	private String name;
 	private String url;
+	//二级菜单
 	private List<SysUserMenu> childs;
 }

@@ -24,7 +24,7 @@ public class SpringShiroConfig {//http1.1
 	@Bean
 	public SessionManager sessionManager() {
 		DefaultWebSessionManager sessionManager=new DefaultWebSessionManager();
-		sessionManager.setGlobalSessionTimeout(60*60*1000);
+		sessionManager.setGlobalSessionTimeout(60*60*1000);//60分钟
 		return sessionManager;
 	}
 	//实现记住我功能

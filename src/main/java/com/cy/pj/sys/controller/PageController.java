@@ -30,8 +30,10 @@ public class PageController {
 		  //获取登陆用户
 		  SysUser user=ShiroUtils.getUser();
 		  model.addAttribute("user", user);
+		  //查询用户对应的菜单信息(一级，二级)并存储到model，然后在页面上进行呈现。
 		  List<SysUserMenu> userMenus=
-				  sysMenuService.findUserMenusByUserId(user.getId());model.addAttribute("userMenus",userMenus);
+				  sysMenuService.findUserMenusByUserId(user.getId());
+		  model.addAttribute("userMenus",userMenus);
 		return "starter";
 	}
 	@RequestMapping("doPageUI")

@@ -99,7 +99,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 				//3.返回数据
 				return rows;
 		}
-
+/**基于用户id获取用户对应的一级菜单和二级菜单信息*/
 	@Override
 	public List<SysUserMenu> findUserMenusByUserId(Integer id) {
 		//1.对用户id进行判断

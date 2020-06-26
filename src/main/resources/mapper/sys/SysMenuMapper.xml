@@ -60,7 +60,7 @@ createdTime,modifiedTime,createdUser,modifiedUser)
         </where>
     </select>
     
-    <select id="findMenusByids" resultMap="sysUserMenu">
+    <select id="findMenusByIds" resultMap="sysUserMenu">
 		select p.id,p.name,p.url,c.id cid,c.name cname,c.url curl
 		from sys_menus p join sys_menus c 
 		on c.parentId=p.id
