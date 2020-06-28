@@ -80,10 +80,10 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 		 <dependency>
-		   	<groupId>org.apache.shiro</groupId>
-		   	<artifactId>shiro-spring</artifactId>
-		   	<version>1.5.3</version>
-		 </dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring-boot-web-starter</artifactId>
+			<version>1.5.3</version>
+		</dependency>
 	</dependencies>
 
 	<build>

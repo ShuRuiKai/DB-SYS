@@ -40,7 +40,7 @@ public class PageController {
 	public String doPageUI() {
 		return "common/page";
 	}
-	 @RequestMapping("doLogin")
+	 @RequestMapping("doLoginUI")
 	  public String doLogin() {
 		  return "login";
 	  }
