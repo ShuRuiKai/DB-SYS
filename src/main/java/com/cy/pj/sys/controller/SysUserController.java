@@ -67,9 +67,7 @@ public class SysUserController {
      }
 
      @RequestMapping("/doLogin")
-     public JsonResult doLogin(String username,
-    		 String password,
-    		 boolean isRememberMe) {
+     public JsonResult doLogin(String username,String password,boolean isRememberMe) {
     	 UsernamePasswordToken token = new UsernamePasswordToken(username, password);
     	 //设置记住我功能
     	 token.setRememberMe(isRememberMe);
